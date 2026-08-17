@@ -37,23 +37,23 @@ git:
   head: <sha>
   base: <origin/main sha>
   index_tree: <git write-tree 的输出>
-  working_tree_fingerprint: <fingerprint-tree.sh 输出>   # v1.1：含 untracked 的精确快照
+  working_tree_fingerprint: <fingerprint-tree.sh 输出>   # v1.0：含 untracked 的精确快照
 scope:
   mode: workspace        # workspace | staged | commit-range
   declared: "<主 Agent 声称的改动范围>"
 profiles: [openclaw-skill, agent-os]   # 由 CLASSIFY 决定
 ```
 
-> **v1.1 快照语义（P0 修复）**：`git write-tree` 只反映 index/tree，**不包含 untracked 文件**。
+> **v1.0 快照语义（P0 修复）**：`git write-tree` 只反映 index/tree，**不包含 untracked 文件**。
 > 若审核期间新增 untracked 文件（debug.py/.env），write-tree 不变 → 误判 TREE_UNCHANGED → 错误 APPROVED。
 > 因此快照改用 `working_tree_fingerprint`（scripts/fingerprint-tree.sh）：
 > `HEAD sha + index tree + staged diff(--binary) + unstaged diff(--binary) + untracked 路径与内容` 整体 sha256。
 > 任一变化（含 untracked 增删改）→ 指纹变 → 立即 INVALIDATED。
 
-**快照原子性（v1.1）**：`collect → fingerprint → verify → freeze`——
+**快照原子性（v1.0）**：`collect → fingerprint → verify → freeze`——
 采集后立即复算指纹，两次一致才冻结（LOCK）；不一致（期间有写入）→ 重试采集。
 
-**Permission Preflight（v1.1）**：开始审核前必须运行 `scripts/preflight.sh <repo>`，
+**Permission Preflight（v1.0）**：开始审核前必须运行 `scripts/preflight.sh <repo>`，
 确认只读（git 只读命令可用 + 审核脚本集合无 push/commit/reset/clean 写操作）；
 返回 REVIEWER_UNSAFE 时拒绝审核，直到权限确认。
 
@@ -148,7 +148,7 @@ Behavior changed?
 
 **目标**：调用项目已有验证方式 + OpenClaw 原生验证，不发明测试框架。
 
-**验证状态机（v1.1）**：
+**验证状态机（v1.0）**：
 
 ```
 NOT_APPLICABLE  — 工具不存在/不适用（package.json 无 test script、无 pytest.ini）→ 不阻塞
@@ -177,17 +177,17 @@ openclaw security audit --json
 openclaw skills check        # 审核 Skill 变更时必跑（无参，verify 需参数）
 ```
 
-> 统一入口：`scripts/check-verification.sh <repo>`（v1.1）输出各验证项状态。
+> 统一入口：`scripts/check-verification.sh <repo>`（v1.0）输出各验证项状态。
 
 **判定**：FAILED → **CHANGES_REQUIRED**；INCOMPLETE → 结合风险（R4）判断是否阻止；安全审计问题 → 按 R8 处理。
 
 ### R8 — Security（三层安全）
 
-**Layer 1 — Repository secrets**（无条件执行，v1.1 全覆盖）：
+**Layer 1 — Repository secrets**（无条件执行，v1.0 全覆盖）：
 
 ```bash
 # 统一入口：scripts/check-secrets.sh <repo>
-# 覆盖范围（v1.1）：
+# 覆盖范围（v1.0）：
 #   - tracked diff（staged + unstaged，--binary 含新增内容）
 #   - untracked 文件内容扫描（-z 安全处理空格文件名）
 #   - tracked 敏感文件名（.env/.pem/.key/credentials/secret）
@@ -259,12 +259,12 @@ APPROVED → 工作树发生变化（working_tree_fingerprint 变，含 untracke
 
 - 不做"应该只是小修改"的假设。
 - INVALIDATED 时丢弃原 APPROVED 结论并告知用户，重新走完整状态机。
-- 校验命令：`scripts/verify-tree.sh <repo> <期望fingerprint>`（v1.1，基于 fingerprint-tree.sh）。
+- 校验命令：`scripts/verify-tree.sh <repo> <期望fingerprint>`（v1.0，基于 fingerprint-tree.sh）。
 
 ## 5. Reviewer 权限边界
 
 - 只读：read / exec(read-only) / process / git 查看
 - 禁止：edit / write / apply_patch（由 OpenClaw tools 策略强制）
-- **Preflight（v1.1）**：每次审核前运行 `scripts/preflight.sh <repo>`；返回 REVIEWER_UNSAFE 时拒绝审核
+- **Preflight（v1.0）**：每次审核前运行 `scripts/preflight.sh <repo>`；返回 REVIEWER_UNSAFE 时拒绝审核
 - Reviewer ≠ Fixer：findings 给 Main Agent 修；修完重审
 - 最终 commit/push 由 Main Agent（Gate Mode）执行，且仍需用户确认

@@ -1,0 +1,14 @@
+# generic — 通用 profile（默认，无项目特征时使用）
+name: generic
+weight: default
+gates:
+  R1_change_scope: true
+  R2_completeness: true
+  R3_consistency: true
+  R4_impact: true
+  R5_architecture: false
+  R6_documentation: true
+  R7_verification: false
+  R8_security: true
+  R9_hygiene: true
+  R10_release_readiness: true

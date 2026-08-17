@@ -1,0 +1,61 @@
+# RULES.yaml — repository-reviewer 规则配置（v1.0 冻结）
+
+# 严重级别
+severity:
+  P0: 必须 BLOCKED — 安全泄露/破坏性变更/权限越界
+  P1: 必须 CHANGES_REQUIRED — 一致性/完整性/文档缺失，禁止发布
+  P2: 建议级 — APPROVED_WITH_WARNINGS，不影响发布
+
+# Gate 开关（profiles 可覆盖）
+gates:
+  R1_change_scope:        { enabled: true,  weight: critical }
+  R2_completeness:        { enabled: true,  weight: high }
+  R3_consistency:         { enabled: true,  weight: high }
+  R4_impact:              { enabled: true,  weight: medium }
+  R5_architecture:        { enabled: true,  weight: high }
+  R6_documentation:       { enabled: true,  weight: medium }
+  R7_verification:        { enabled: true,  weight: high }
+  R8_security:            { enabled: true,  weight: critical }
+  R9_hygiene:             { enabled: true,  weight: low }
+  R10_release_readiness:  { enabled: true,  weight: critical }
+
+# 判定阈值
+decide:
+  any_p0: BLOCKED
+  any_p1: CHANGES_REQUIRED
+  only_p2: APPROVED_WITH_WARNINGS
+  clean: APPROVED
+
+# OpenClaw 原生验证命令（不重复实现）
+native_verify:
+  doctor: "openclaw doctor"
+  security: "openclaw security audit --json"
+  security_deep: "openclaw security audit --deep --json"
+  skills_verify: "openclaw skills verify"
+
+# 敏感模式（R8 Layer1 用）
+secret_patterns:
+  - "ghp_[A-Za-z0-9]{20,}"
+  - "sk-[A-Za-z0-9]{20,}"
+  - "AKIA[0-9A-Z]{16}"
+  - "Bearer [A-Za-z0-9._-]{20,}"
+  - "-----BEGIN (RSA|OPENSSH|EC|PRIVATE) KEY-----"
+  - "password\\s*[=:]\\s*['\"][^'\"]{4,}"
+  - "secret\\s*[=:]\\s*['\"][^'\"]{6,}"
+  - "api[_-]?key\\s*[=:]\\s*['\"][^'\"]{8,}"
+  - "token\\s*[=:]\\s*['\"][^'\"]{8,}"
+
+# 卫生检查分类（R9）
+hygiene:
+  expected:   [".gitignore", "LICENSE", "CHANGELOG.md"]
+  ignored:    [".git/", "node_modules/", "*.pyc", "__pycache__/"]
+  suspicious: ["*.log", "*.tmp", "*.bak", "debug*", ".DS_Store", "*.orig", "*.rej"]
+  large_file_bytes: 1000000   # >1MB 标记
+
+# 仓库类型识别（CLASSIFY 用）
+profiles_detect:
+  openclaw-skill:    ["SKILL.md", "_meta.json", "skills/"]
+  agent-os:          ["PROTOCOL.md", "AGENTS.md", "SKILL-MAP.md", "PROTOCOL-CHECKLIST.md"]
+  software:          ["pyproject.toml", "package.json", "Cargo.toml", "go.mod", "setup.py"]
+  documentation:     ["docs/", "README.md", "*.md"]
+  configuration:     [".yaml", ".yml", ".json", ".toml", ".env.example"]

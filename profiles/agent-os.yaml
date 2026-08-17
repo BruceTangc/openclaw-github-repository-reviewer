@@ -1,0 +1,25 @@
+# agent-os — Agent OS 专用 profile
+name: agent-os
+detect: ["PROTOCOL.md", "AGENTS.md", "SKILL-MAP.md", "PROTOCOL-CHECKLIST.md"]
+gates:
+  R1_change_scope: true
+  R2_completeness: true
+  R3_consistency: true       # AGENTS/PROTOCOL/SKILL/代码 全链一致
+  R4_impact: true            # 沿执行链向下追
+  R5_architecture: true      # 核心 gate：协议边界
+  R6_documentation: true
+  R7_verification: true      # evolution-e2e.sh / learn.py 自检
+  R8_security: true
+  R9_hygiene: true
+  R10_release_readiness: true
+chain:
+  - AGENTS.md
+  - PROTOCOL.md
+  - Skills
+  - Execution
+  - Verification
+  - Evolution
+  - Memory/Ontology
+  - Automation
+  - Heartbeat/Proactive
+impact_rule: 任何一环发生变化 → Impact Analysis 继续向下追

@@ -1,0 +1,20 @@
+# software — 软件项目 profile（有包管理器/测试框架）
+name: software
+detect: ["pyproject.toml", "package.json", "Cargo.toml", "go.mod", "setup.py"]
+gates:
+  R1_change_scope: true
+  R2_completeness: true
+  R3_consistency: true
+  R4_impact: true
+  R5_architecture: true
+  R6_documentation: true
+  R7_verification: true      # 跑 pytest/npm test/cargo test/go test
+  R8_security: true
+  R9_hygiene: true
+  R10_release_readiness: true
+verify:
+  - pytest
+  - npm test
+  - pnpm test
+  - cargo test
+  - go test ./...

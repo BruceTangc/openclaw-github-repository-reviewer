@@ -1,0 +1,14 @@
+# documentation — 文档项目 profile
+name: documentation
+detect: ["docs/", "README.md"]
+gates:
+  R1_change_scope: true
+  R2_completeness: true      # 文档交叉引用是否同步
+  R3_consistency: true       # 术语/版本/示例一致性
+  R4_impact: false
+  R5_architecture: false
+  R6_documentation: true     # 核心 gate
+  R7_verification: false
+  R8_security: true          # 文档也可能泄露 secrets
+  R9_hygiene: true
+  R10_release_readiness: true

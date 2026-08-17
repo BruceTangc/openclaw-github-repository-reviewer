@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReviewRecord",
+  "type": "object",
+  "required": ["review_id", "result", "snapshot", "gates"],
+  "properties": {
+    "review_id": {"type": "string"},
+    "result": {"enum": ["APPROVED", "APPROVED_WITH_WARNINGS", "CHANGES_REQUIRED", "BLOCKED", "INVALIDATED"]},
+    "snapshot": {
+      "type": "object",
+      "required": ["repository", "git"],
+      "properties": {
+        "repository": {"type": "object"},
+        "git": {"type": "object"},
+        "scope": {"type": "object"},
+        "profiles": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "findings": {"type": "array", "items": {"$ref": "#/definitions/finding"}},
+    "gates": {"type": "object"},
+    "verified_at": {"type": "string", "format": "date-time"}
+  },
+  "definitions": {
+    "finding": {
+      "type": "object",
+      "required": ["id", "severity", "gate", "file", "message"],
+      "properties": {
+        "id": {"type": "string"},
+        "severity": {"enum": ["P0", "P1", "P2"]},
+        "gate": {"type": "string"},
+        "file": {"type": "string"},
+        "message": {"type": "string"},
+        "required_action": {"type": "string"}
+      }
+    }
+  }
+}

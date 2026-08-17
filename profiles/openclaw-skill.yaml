@@ -1,0 +1,18 @@
+# openclaw-skill — OpenClaw Skill 专用 profile
+name: openclaw-skill
+detect: ["SKILL.md", "_meta.json"]
+gates:
+  R1_change_scope: true
+  R2_completeness: true
+  R3_consistency: true       # frontmatter vs _meta.json vs MANIFEST
+  R4_impact: true            # Skill 影响哪些 Agent 加载
+  R5_architecture: true      # Skill 是否越权承担别的 Skill 职责
+  R6_documentation: true
+  R7_verification: true      # openclaw skills verify
+  R8_security: true          # Skill 脚本/权限声明
+  R9_hygiene: true
+  R10_release_readiness: true
+checks:
+  skill_frontmatter: [name, description, metadata.openclaw.requires]
+  skill_sources: [workspace, project-agent, personal, managed, extra]
+  key_question: "这个 Skill 实际会不会被当前 Agent 加载？"

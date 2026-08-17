@@ -1,0 +1,14 @@
+# configuration — 配置类项目 profile（yaml/json/toml/env）
+name: configuration
+detect: [".yaml", ".yml", ".json", ".toml", ".env.example"]
+gates:
+  R1_change_scope: true
+  R2_completeness: true
+  R3_consistency: true       # 配置项是否被实际读取
+  R4_impact: true            # 配置变更影响面大
+  R5_architecture: true      # 是否绕过协议节点
+  R6_documentation: true
+  R7_verification: true      # openclaw doctor / config validate
+  R8_security: true          # 配置泄露 secrets 高发
+  R9_hygiene: true
+  R10_release_readiness: true

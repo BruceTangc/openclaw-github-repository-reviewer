@@ -1,0 +1,19 @@
+# 运行时/个人文件
+reviews/
+openclaw-workspace-state.json
+HEARTBEAT.md
+IDENTITY.md
+SOUL.md
+TOOLS.md
+USER.md
+BOOTSTRAP.md
+
+# Python
+__pycache__/
+*.pyc
+
+# 临时/备份
+*.bak
+*.tmp
+*.orig
+*.rej

@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReleaseGate",
+  "type": "object",
+  "required": ["review_id", "decision", "tree_hash"],
+  "properties": {
+    "review_id": {"type": "string"},
+    "decision": {"enum": ["BLOCKED", "CHANGES_REQUIRED", "APPROVED_WITH_WARNINGS", "APPROVED"]},
+    "tree_hash": {"type": "string"},
+    "gate_mode": {"enum": ["gate", "release_authority"]},
+    "expires_at": {"type": "string", "format": "date-time"},
+    "note": {"type": "string"}
+  }
+}

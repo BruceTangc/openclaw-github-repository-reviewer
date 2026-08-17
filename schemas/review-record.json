@@ -12,7 +12,7 @@
       "properties": {
         "repository": {
           "type": "object",
-          "required": ["path", "branch"],
+          "required": ["path", "branch", "repository_id"],
           "properties": {
             "path": {"type": "string"},
             "branch": {"type": "string"},

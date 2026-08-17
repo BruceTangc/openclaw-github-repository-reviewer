@@ -174,7 +174,7 @@ OpenClaw 原生验证（适用时）：
 ```bash
 openclaw doctor
 openclaw security audit --json
-openclaw skills verify        # 审核 Skill 变更时必跑
+openclaw skills check        # 审核 Skill 变更时必跑（无参，verify 需参数）
 ```
 
 > 统一入口：`scripts/check-verification.sh <repo>`（v1.1）输出各验证项状态。

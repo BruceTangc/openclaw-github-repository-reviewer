@@ -24,7 +24,7 @@ bash scripts/check-verification.sh <repo>
 # OpenClaw 原生
 openclaw doctor
 openclaw security audit --json
-openclaw skills verify        # Skill 变更必跑
+openclaw skills check        # 无参等价 verify；verify 需 skill-ref 参数
 ```
 
 判定：FAILED → CHANGES_REQUIRED；INCOMPLETE → 结合 R4 风险判断是否阻止；安全审计问题 → 按 R8。

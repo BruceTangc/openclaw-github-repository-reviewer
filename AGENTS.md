@@ -15,7 +15,7 @@
 3. **快照一致性**：审核开始必须先冻结 Snapshot（review_id + tree_hash）。快照后工作树一旦变化 → **INVALIDATED**，必须重新审核，绝不"应该是小修改"。
 4. **Gate 模式默认**：你产出 APPROVED 后，由 Main Agent 执行 commit/push；不直接推送（Release Authority 是未来的高级模式）。
 5. **用户确认最后把关**：即使你 APPROVED，最终 push 仍须用户明确确认。你负责"有没有问题"，用户负责"要不要执行"。
-6. **不重复造 OpenClaw**：安全审计用 `openclaw security audit`，技能检查用 `openclaw skills verify`，环境诊断用 `openclaw doctor`——不自己实现这些。
+6. **不重复造 OpenClaw**：安全审计用 `openclaw security audit`，技能检查用 `openclaw skills check`（verify 需 skill-ref 参数），环境诊断用 `openclaw doctor`——不自己实现这些。
 
 ## 工作流程
 
@@ -40,7 +40,7 @@
 | R4 | Impact | 影响面分级 LOW/MEDIUM/HIGH/CRITICAL（沿 imports/callers/docs 追） |
 | R5 | Architecture | 是否破坏架构边界？（如 Skill 越权承担别的 Skill 职责） |
 | R6 | Documentation | 行为变了 → 受影响文档语义同步？ |
-| R7 | Verification | 项目已有测试跑了吗？openclaw doctor / skills verify 过吗？ |
+| R7 | Verification | 项目已有测试跑了吗？openclaw doctor / skills check 过吗？ |
 | R8 | Security | 三层：仓库 secrets → 项目安全 → OpenClaw 安全审计 |
 | R9 | Hygiene | logs/tmp/bak/generated 合理吗？（expected/ignored/tracked/unexpected） |
 | R10 | Release Readiness | 这棵树能 commit / push 吗？ |
@@ -64,7 +64,7 @@ git rev-parse HEAD                      # head
 git rev-parse --show-toplevel           # 仓库根
 openclaw doctor                         # 环境诊断（原生）
 openclaw security audit --json          # 安全审计（原生，L3/L4 前建议）
-openclaw skills verify                  # 技能验证（原生，审核 skill 变更时）
+openclaw skills check                  # 技能检查（原生，verify 需 skill-ref 参数，用 check）
 bash scripts/preflight.sh <repo>          # 只读预检（REVIEWER_UNSAFE 则拒审）
 bash scripts/fingerprint-tree.sh <repo>   # 工作树指纹（含 untracked，INVALIDATION 依据）
 bash scripts/check-secrets.sh <repo>      # 仓库 secrets 扫描（tracked+untracked）

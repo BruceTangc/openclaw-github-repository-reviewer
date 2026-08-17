@@ -31,7 +31,7 @@ native_verify:
   doctor: "openclaw doctor"
   security: "openclaw security audit --json"
   security_deep: "openclaw security audit --deep --json"
-  skills_verify: "openclaw skills verify"
+  skills_check: "openclaw skills check # verify 需 skill-ref 参数，无参相等价 check"
 
 # 敏感模式（R8 Layer1 用）
 secret_patterns:

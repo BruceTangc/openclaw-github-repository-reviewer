@@ -2,16 +2,34 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "ReviewRecord",
   "type": "object",
-  "required": ["review_id", "result", "snapshot", "gates"],
+  "required": ["review_id", "result", "snapshot", "gates", "verified_at"],
   "properties": {
-    "review_id": {"type": "string"},
+    "review_id": {"type": "string", "pattern": "^RVW-[0-9]{8}-[0-9]{3}$"},
     "result": {"enum": ["APPROVED", "APPROVED_WITH_WARNINGS", "CHANGES_REQUIRED", "BLOCKED", "INVALIDATED"]},
     "snapshot": {
       "type": "object",
       "required": ["repository", "git"],
       "properties": {
-        "repository": {"type": "object"},
-        "git": {"type": "object"},
+        "repository": {
+          "type": "object",
+          "required": ["path", "branch"],
+          "properties": {
+            "path": {"type": "string"},
+            "branch": {"type": "string"},
+            "remote": {"type": "string"},
+            "repository_id": {"type": "string"}
+          }
+        },
+        "git": {
+          "type": "object",
+          "required": ["head", "index_tree", "working_tree_fingerprint"],
+          "properties": {
+            "head": {"type": "string"},
+            "base": {"type": "string"},
+            "index_tree": {"type": "string"},
+            "working_tree_fingerprint": {"type": "string"}
+          }
+        },
         "scope": {"type": "object"},
         "profiles": {"type": "array", "items": {"type": "string"}}
       }

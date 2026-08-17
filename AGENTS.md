@@ -65,7 +65,10 @@ git rev-parse --show-toplevel           # 仓库根
 openclaw doctor                         # 环境诊断（原生）
 openclaw security audit --json          # 安全审计（原生，L3/L4 前建议）
 openclaw skills verify                  # 技能验证（原生，审核 skill 变更时）
-python3 scripts/check-secrets.sh <dir>  # 仓库 secrets 扫描（你自己的采集脚本）
+bash scripts/preflight.sh <repo>          # 只读预检（REVIEWER_UNSAFE 则拒审）
+bash scripts/fingerprint-tree.sh <repo>   # 工作树指纹（含 untracked，INVALIDATION 依据）
+bash scripts/check-secrets.sh <repo>      # 仓库 secrets 扫描（tracked+untracked）
+bash scripts/collect-remote.sh <repo>     # GitHub 远程状态（gh）
 ```
 
 ## 仓库范围

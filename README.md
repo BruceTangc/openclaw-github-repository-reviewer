@@ -1,7 +1,10 @@
 # OpenClaw GitHub Repository Reviewer
 
-> 独立的 GitHub 仓库审核与 Release Gate Agent —— 基于 OpenClaw 26.7.1 原生能力，
+> 独立 的 GitHub 仓库审核与 Release Gate Agent —— 基于 OpenClaw 26.7.1 原生能力，
 > 专门负责 **变更治理 + 独立审核 + Release Gate**，不重复实现 Agent/Skill/Automation/Security。
+
+> **定位说明**：GitHub 是主要托管场景，Reviewer 本身以 **Git Repository** 为审核边界
+> （同样适用于 OpenClaw skill / Agent OS / software / documentation / configuration 等项目）。
 
 审核任何 Agent 对任何 Repository 产生的实际变更，在 Commit / Push 前提供独立的 Release Gate：
 
@@ -62,7 +65,7 @@ START → DISCOVER → SNAPSHOT → CLASSIFY → REVIEW → VERIFY → DECIDE
 ├── profiles/                # generic/software/documentation/configuration/openclaw-skill/agent-os
 ├── checks/                  # R1-R10 每道 Gate 速查卡
 ├── schemas/                 # review-record / finding / release-gate JSON Schema
-└── scripts/                 # collect-state / collect-diff / detect-project / verify-tree / check-secrets / check-hygiene
+└── scripts/                 # preflight / fingerprint-tree / collect-state / collect-diff / detect-project / verify-tree / check-secrets / check-verification / check-hygiene / collect-remote
 ```
 
 ## 安装使用

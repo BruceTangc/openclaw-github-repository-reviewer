@@ -2,13 +2,16 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "ReleaseGate",
   "type": "object",
-  "required": ["review_id", "decision", "tree_hash"],
+  "required": ["review_id", "repository_id", "head_sha", "working_tree_fingerprint", "decision", "issued_at"],
   "properties": {
-    "review_id": {"type": "string"},
+    "review_id": {"type": "string", "pattern": "^RVW-[0-9]{8}-[0-9]{3}$"},
+    "repository_id": {"type": "string", "description": "仓库标识：path 或 owner/repo（防止树哈希对应错仓库）"},
+    "head_sha": {"type": "string", "description": "审核时 HEAD sha"},
+    "working_tree_fingerprint": {"type": "string", "description": "Exact Working Tree Fingerprint（含 untracked），tree 变化即失效"},
     "decision": {"enum": ["BLOCKED", "CHANGES_REQUIRED", "APPROVED_WITH_WARNINGS", "APPROVED"]},
-    "tree_hash": {"type": "string"},
     "gate_mode": {"enum": ["gate", "release_authority"]},
-    "expires_at": {"type": "string", "format": "date-time"},
+    "issued_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": "string", "format": "date-time", "description": "可选：Gate 有效期，过期须重审"},
     "note": {"type": "string"}
   }
 }

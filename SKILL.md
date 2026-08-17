@@ -91,7 +91,7 @@ profiles:
 - `profiles/` — 项目类型画像（决定重点 Gate）
 - `checks/` — 每道 Gate 的检查手册
 - `schemas/` — review-record / finding / release-gate JSON schema
-- `scripts/` — 采集脚本（collect-state/collect-diff/detect-project/verify-tree/check-secrets/check-hygiene）
+- `scripts/` — 采集脚本（preflight/fingerprint-tree/collect-state/collect-diff/detect-project/verify-tree/check-secrets/check-verification/check-hygiene/collect-remote）
 - 审核结果存 `reviews/RVW-*.md`（可审计）
 
 ## 权限原则

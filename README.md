@@ -53,6 +53,7 @@ START → DISCOVER → SNAPSHOT → CLASSIFY → REVIEW → VERIFY → DECIDE
 
 - **Snapshot 快照**：审核开始先冻结完整身份 —— `review_id + repository_id + HEAD + index_tree + working_tree_fingerprint + scope + profiles`；
   `working_tree_fingerprint` 是 Release Gate 的**最终 Tree 身份标识**（含 untracked），快照后任一变化 = **INVALIDATED，必须重审**。
+  > 协议 §1 另有 `git.base`（比较基准 sha，非失效身份字段）与 `repository.path/branch/remote` 作审计上下文，见 REVIEW-PROTOCOL.md。
 - **Reviewer ≠ Fixer**：只出 findings（含 required_action），修复由 Main Agent 完成，修完重审。
 - **Gate Mode 默认**：APPROVED 后由 Main Agent commit/push，最终 push 仍需用户明确确认。
 

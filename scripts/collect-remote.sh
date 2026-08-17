@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# collect-remote.sh — GitHub Remote State Check（v1.1，gh 实际使用）
+# collect-remote.sh — GitHub Remote State Check（v1.0，gh 实际使用）
 #
 # 目的：让 gh 在审核链中真实发挥作用——远程状态不一致也是 Release Gate 的输入。
 # 输出：branch / remote / ahead / behind / PR open / 是否可推送

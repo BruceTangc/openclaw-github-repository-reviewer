@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# check-secrets.sh — 仓库 secrets 扫描（R8 Layer1，v1.1.1）
+# check-secrets.sh — 仓库 secrets 扫描（R8 Layer1，v1.0）
 #
-# v1.1.1：修复 F-004-1 子 shell 计数丢失 bug——
+# v1.0：修复 F-004-1 子 shell 计数丢失 bug——
 # 第 1、2 节的 HITS 在管道 `| while` 子 shell 中自增不传导父 shell，
 # 导致命中 secret 却 SECRET_FOUND=0 / exit 0（false-clean）。
 # 改用临时计数文件聚合，跨子 shell 累加，杜绝泄漏。

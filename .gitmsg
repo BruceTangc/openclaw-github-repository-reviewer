@@ -1,0 +1,7 @@
+docs: (P2) unify all script/check version tags to v1.0 + README base note
+
+RVW-006 follow-up P2s:
+- P2-2: scripts/*.sh and checks/*.md internal 'v1.1'/'v1.1.1' tags -> 'v1.0'
+  (protocol is frozen at v1.0; no dangling 'is there an unreleased v1.1' ambiguity)
+- P2-1: README Snapshot section notes git.base (+ path/branch/remote) as
+  comparison baseline / audit context per REVIEW-PROTOCOL.md Sec 1

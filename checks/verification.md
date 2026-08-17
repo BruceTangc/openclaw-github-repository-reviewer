@@ -1,8 +1,8 @@
-# R7 — Verification（项目验证 + OpenClaw 原生，v1.1）
+# R7 — Verification（项目验证 + OpenClaw 原生，v1.0）
 
 目标：调用项目已有验证方式，不发明测试框架。
 
-**验证状态机（v1.1）**：
+**验证状态机**：
 - NOT_APPLICABLE — 工具不存在/不适用（无 pytest.ini、package.json 无 test script）→ 不阻塞
 - NOT_RUN — 存在但未跑 → 记 INCOMPLETE，结合风险判断
 - PASSED — 通过
@@ -12,7 +12,7 @@
 **原则**：工具不存在 / 环境不满足 ≠ 测试失败。`pytest not installed` 不得直接 CHANGES_REQUIRED。
 
 ```bash
-# 统一入口（v1.1）
+# 统一入口
 bash scripts/check-verification.sh <repo>
 
 # 项目已有（存在才跑；package.json 无 test script = NOT_APPLICABLE）

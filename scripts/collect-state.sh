@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# collect-state.sh — 采集仓库基础状态（DISCOVER/SNAPSHOT 前置，v1.1）
+# collect-state.sh — 采集仓库基础状态（DISCOVER/SNAPSHOT 前置，v1.0）
 #
-# v1.1：新增 working_tree_fingerprint（Exact Working Tree Fingerprint，
+# v1.0：新增 working_tree_fingerprint（Exact Working Tree Fingerprint，
 # 含 tracked/staged/unstaged/untracked 路径与内容，替代单一 git write-tree）。
 set -u
 REPO="${1:?用法: collect-state.sh <仓库路径>}"

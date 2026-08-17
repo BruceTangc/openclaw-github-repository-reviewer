@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# preflight.sh — 只读权限预检（v1.1，R7/Permission）
+# preflight.sh — 只读权限预检（v1.0，R7/Permission）
 #
 # 目的：不让 Reviewer 假设"我肯定只读"。启动审核前确认：
 #   - 目标仓库可读、可执行 git

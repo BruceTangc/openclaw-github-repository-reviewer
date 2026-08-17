@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# check-verification.sh — R7 Verification 状态机（v1.1）
+# check-verification.sh — R7 Verification 状态机（v1.0）
 #
 # 状态：NOT_APPLICABLE / NOT_RUN / RUNNING / PASSED / FAILED / BLOCKED / INCOMPLETE
 # 原则：工具不存在 / 环境不满足 ≠ 测试失败 → INCOMPLETE，由 Reviewer 结合风险判定是否阻止发布。

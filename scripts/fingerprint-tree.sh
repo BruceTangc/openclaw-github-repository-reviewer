@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# fingerprint-tree.sh — 计算 Exact Working Tree Fingerprint（v1.1，P0 修复）
+# fingerprint-tree.sh — 计算 Exact Working Tree Fingerprint（v1.0，P0 修复）
 #
 # 为什么不用 git write-tree：
 #   write-tree 只反映 Git index/tree，不包含 untracked 文件。

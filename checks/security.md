@@ -1,9 +1,9 @@
-# R8 — Security（三层安全，v1.1）
+# R8 — Security（三层安全，v1.0）
 
 Layer 1 仓库 secrets（无条件执行，统一入口）：
 ```bash
 bash scripts/check-secrets.sh <repo>
-# 覆盖范围（v1.1）：
+# 覆盖范围（v1.0）：
 #   - tracked diff（staged + unstaged，--binary 含新增内容）
 #   - untracked 文件内容扫描（-z 安全处理空格文件名）
 #   - tracked 敏感文件名（.env/.pem/.key/credentials/secret）

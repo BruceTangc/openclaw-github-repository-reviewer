@@ -49,7 +49,7 @@ OpenClaw (Agents/Skills/Automation 原生)
 | R4 | Impact | 改动影响面：LOW/MEDIUM/HIGH/CRITICAL |
 | R5 | Architecture | 是否破坏现有架构边界（Skill 越权） |
 | R6 | Documentation | 行为变了 → 受影响文档是否同步 |
-| R7 | Verification | 跑项目已有测试 + openclaw doctor/security audit/skills verify |
+| R7 | Verification | 跑项目已有测试 + openclaw doctor/security audit/skills check |
 | R8 | Security | 三层：仓库 secrets → 项目安全 → OpenClaw 安全 |
 | R9 | Hygiene | logs/tmp/cache/bak/generated 是否合理（expected/ignored/tracked/unexpected） |
 | R10 | Release Readiness | 这棵树能 commit / push 吗？ |

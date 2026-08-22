@@ -3,6 +3,8 @@
 #
 # 状态：NOT_APPLICABLE / NOT_RUN / RUNNING / PASSED / FAILED / BLOCKED / INCOMPLETE
 # 原则：工具不存在 / 环境不满足 ≠ 测试失败 → INCOMPLETE，由 Reviewer 结合风险判定是否阻止发布。
+# IMP-2 修复：移除 eval "$cmd"（命令注入面）。cmd 为硬编码常量，改用 bash -c 子进程执行，
+#  消除 eval 语义（关闭命令替换/变量重新解析），term 保持硬编码、不接受外部输入。
 set -u
 REPO="${1:?用法: check-verification.sh <仓库路径>}"
 cd "$REPO" || exit 1
@@ -13,7 +15,7 @@ run_test() {
     echo "  [NOT_APPLICABLE] $name — 工具 ${cmd%% *} 不存在，跳过"
     return 0
   fi
-  if ! eval "$cmd" >/dev/null 2>&1; then
+  if ! bash -c "$cmd" >/dev/null 2>&1; then
     echo "  [FAILED] $name — $cmd 执行失败"
     FAILED=$((FAILED+1))
     return 1

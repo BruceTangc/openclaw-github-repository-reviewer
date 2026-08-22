@@ -26,7 +26,12 @@ hit() {
 total() { cat "$CNT"; }
 
 echo "=== 1/4 tracked diff（staged + unstaged, --binary） ==="
-git diff HEAD --binary 2>/dev/null | grep -niE "$PATTERNS" | head -20 | while IFS= read -r l; do
+# BUG-1 修复：git diff HEAD 对已 add 的 staged 新文件输出为空（首次 commit 前 HEAD 也不存在）
+# → tracked 新文件中的 secret 漏检（false-clean）。必须同时扫 --cached。
+{
+  git diff HEAD --binary 2>/dev/null
+  git diff --cached --binary 2>/dev/null
+} | grep -niE "$PATTERNS" | head -20 | while IFS= read -r l; do
   hit "diff: ${l%%:*}"
 done
 [ "$(total)" = 0 ] && echo "  (clean)"
